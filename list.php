@@ -1,24 +1,59 @@
 <?php
-echo "<h1> To do list system</h1><br/>";
-echo "Welcome, ".$_COOKIE['name'].'<br/>';
-echo "Below you may find your to-do items: ";
-echo "<br> <br>";
-
+require_once('db.php');
+$completed_todo_list = fetchtodolist($user['id'],"Completed");
+$incomplete_todo_list = fetchtodolist($user['id'],"Pending");
 ?>
-<html>
-<body>
+<?php include 'todoheader.php'; ?>
+<?php echo $user['first_name']." ".$user['last_name'];?>
+<br>
+<br>
+<a style = "padding:12px" href="index.php">logout</a>
+
+<br><br>
+<h4>To-do items</h3>
+
 <table>
-<?php foreach($result as $res):?>
+<?php foreach($incomplete_todo_list as $todo) : ?>
 <tr>
-<td> <?php echo $res['todo_item']; ?>  </td>
-</tr>  
-<?php endforeach;?>
+<td>
+<form action="list_controller.php" method="post">
+<input type="text" name ="todo_item" value = "<?php echo $todo['todo_item'];?>">
+<input type="hidden" name="todo_id" value="<?php echo $todo['id']; ?>">
+<input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
+<input name="actionBtn" type="submit" value="edit">
+<input name="actionBtn" type="submit" value="delete">
+<input name="actionBtn" type="submit" value="completed">
+</form>
+</td>
+</tr>
+</tr>
+<?php endforeach; ?>
 </table>
-<form method = 'post' action='index.php'>
-  <strong> Description: </strong> <input type='text' name='description'/><br>
-  	<input type = 'hideen' name = 'action' value='add'><br>
-		<input type="submit" value="Add"/>
-		</form>
-		</body>
-		</html>
+
+<br><br>
+<h4>Completed To-do items</h3>
+<table>
+<?php foreach($completed_todo_list as $todo) : ?>
+<tr>
+<td>
+<form action="list_controller.php" method="post">
+<input type="text" name ="todo_item" value = "<?php echo $todo['todo_item'];?>">
+<input type="hidden" name="todo_id" value="<?php echo $todo['id']; ?>">
+<input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
+<input name="actionBtn" type="submit" value="edit">
+<input name="actionBtn" type="submit" value="delete">
+</form>
+</td>
+</tr>
+</tr>
+<?php endforeach; ?>
+</table>
+<br><br><br>
+<form action="list_controller.php" method="post">
+<label>Todo Item</label>
+<input type="text" name="todo_item">
+<input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
+<input name="actionBtn" type="submit" value="add">
+</form>
+<?php include 'footer.php'; ?>
 
