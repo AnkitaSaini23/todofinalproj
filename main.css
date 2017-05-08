@@ -1,0 +1,30 @@
+
+footer {
+    position: absolute;
+        left: 0;
+	    bottom: 0;
+	        height: 50px;
+		    width: 100%;
+		        overflow:hidden;
+			}
+
+			footer p {
+			    text-align: center;
+			    }
+
+			    form {
+			        display: inline-block;
+				    text-align: left;
+				    }
+
+				    table {
+				        display: inline-block;
+					    text-align: left;
+					        padding: 2px;
+						}
+
+						body {
+						    text-align: center;
+						    }
+
+
