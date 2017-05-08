@@ -10,7 +10,7 @@
 		    <input style="align:center" type = "submit" value="Login">
 		    </form>
 		    <br><br>
-		    <p>New User ? <a href="register.php">Register here</a></p>
+		    <p>New User ? <a href="register.php">Register!</a></p>
 		    <br><br>
    <?php
     if(isset($login_error)){echo $login_error;
