@@ -1,7 +1,5 @@
 <?php
 
-require_once('db.php');
-
 function fetchUserEmail($user_emailid){
 global $db;
 $queryname = 'SELECT * FROM users WHERE username = :user_emailid';
@@ -13,7 +11,7 @@ $statement->closeCursor();
 return $result;
 }
 
-function fetcUserId($user_id){
+function fetchUserId($user_id){
 global $db;
 $queryname = 'SELECT * FROM users WHERE id = :user_id';
 $statement = $db->prepare($queryname);
@@ -42,7 +40,7 @@ $statement->execute();
 $statement->closeCursor();
 }
 
-function getTodoListForGivenUser($user_id, $item_status){
+function fetchtodolist($user_id, $item_status){
 global $db;
 $queryname = 'SELECT * FROM todos WHERE user_id = :user_id AND item_status = :item_status order by
 due_date';
@@ -55,7 +53,7 @@ $statement->closeCursor();
 return $result;
 }
 
-function addTodoForGivenUser($user_id, $todo_item){
+function addtodolist($user_id, $todo_item){
 global $db;
 $query = 'INSERT INTO todos (user_id, todo_item) VALUES (:user_id, :todo_item)';
 $statement = $db->prepare($query);
