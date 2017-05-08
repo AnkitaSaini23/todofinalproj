@@ -1,81 +1,96 @@
 <?php
 
-function addTodoItem($user_id,$todo_text){
+require_once('db.php');
+
+function fetchUserEmail($user_emailid){
 global $db;
-$query = 'insert into todos(user_id,todo_item) values (:userid,:todo_text)';
-$statement = $db->prepare($query);
-$statement->bindValue(':userid',$user_id);
-$statement->bindValue(':todo_text',$todo_text);
+$queryname = 'SELECT * FROM users WHERE username = :user_emailid';
+$statement = $db->prepare($queryname);
+$statement->bindvalue(':user_emailid',$user_emailid);
 $statement->execute();
+$result = $statement->fetch();
 $statement->closeCursor();
+return $result;
 }
-function getTodoItemsForGivenUser($user_id, $status){
+
+function fetcUserId($user_id){
 global $db;
-$queryname = 'SELECT * FROM todos WHERE user_id = :user_id AND status = :status order by createdtime';
+$queryname = 'SELECT * FROM users WHERE id = :user_id';
 $statement = $db->prepare($queryname);
 $statement->bindvalue(':user_id',$user_id);
-$statement->bindvalue(':status',$status);
 $statement->execute();
-$todo_list = $statement->fetchAll();
+$result = $statement->fetch();
 $statement->closeCursor();
-return $todo_list;
+return $result;
 }
-function createUser($username,$first_name,$last_name,$password,$phone_no,$birthday,$gender){
+
+function createNewUser($username,$first_name,$last_name,$password,$phone_no,$birthday,$gender){
 global $db;
-$query = 'select * from users where username = :username ';
-$statement = $db->prepare($query);
-$statement->bindValue(':username',$username);
-$statement->execute();
-$result= $statement->fetchAll();
-$statement->closeCursor();
-$count = $statement->rowCount();
-if($count > 0)
-{
-return true;
-}
-else{
 $query = 'INSERT INTO users
-( username ,password, first_name, last_name, phone_no,birthday,gender)
+(username ,password, first_name, last_name, phone_no,birthday,gender)
 VALUES
 (:username,:password, :first_name, :last_name, :phone_no, :birthday, :gender)';
- $statement = $db->prepare($query);
- $statement->bindValue(':username', $username);
- $statement->bindValue(':password', $password);
- $statement->bindValue(':first_name', $first_name);
- $statement->bindValue(':last_name', $last_name);
- $statement->bindValue(':phone_no', $phone_no);
- $statement->bindValue(':birthday', $birthday);
- $statement->bindValue(':gender', $gender);
- $statement->execute();
- $statement->closeCursor();
- return false;
- }
- }
- function isUserValid($username,$password){
- global $db;
- $query = 'select * from users where username = :username and 
- password = :password';
- $statement = $db->prepare($query);
- $statement->bindValue(':username',$username);
- $statement->bindValue(':password',$password);
- $statement->execute();
- $result= $statement->fetchAll();
- $statement->closeCursor();
- $count = $statement->rowCount();
- if($count == 1){
- setcookie('login',$username);
- setcookie('my_id',$result[0]['id']);
- setcookie('name',$result[0]['first_name'].' '.$result[0]['last_name']);
- setcookie('islogged',true);
- return true;
- }
- else{
- unset($_COOKIE['login']);
- setcookie('login',false);
- setcookie('islogged',false);
- setcookie('id',false);
- return false;
- }
- }
- ?>
+$statement = $db->prepare($query);
+$statement->bindValue(':username', $username);
+$statement->bindValue(':password', $password);
+$statement->bindValue(':first_name', $first_name);
+$statement->bindValue(':last_name', $last_name);
+$statement->bindValue(':phone_no', $phone_no);
+$statement->bindValue(':birthday', $birthday);
+$statement->bindValue(':gender', $gender);
+$statement->execute();
+$statement->closeCursor();
+}
+
+function getTodoListForGivenUser($user_id, $item_status){
+global $db;
+$queryname = 'SELECT * FROM todos WHERE user_id = :user_id AND item_status = :item_status order by
+due_date';
+$statement = $db->prepare($queryname);
+$statement->bindvalue(':user_id',$user_id);
+$statement->bindvalue(':item_status',$item_status);
+$statement->execute();
+$result = $statement->fetchAll();
+$statement->closeCursor();
+return $result;
+}
+
+function addTodoForGivenUser($user_id, $todo_item){
+global $db;
+$query = 'INSERT INTO todos (user_id, todo_item) VALUES (:user_id, :todo_item)';
+$statement = $db->prepare($query);
+$statement->bindValue(':user_id', $user_id);
+$statement->bindValue(':todo_item', $todo_item);
+$statement->execute();
+$statement->closeCursor();
+}
+function updateToDoItem($id,$todo_item){
+global $db;
+$query = 'UPDATE todos SET todo_item = :todo_item WHERE id = :id';
+$statement = $db->prepare($query);
+$statement->bindValue(':id', $id);
+$statement->bindValue(':todo_item', $todo_item);
+$statement->execute();
+$statement->closeCursor();
+}
+
+function deleteTodo($todo_id){
+global $db;
+$query = 'DELETE FROM todos WHERE id = :todo_id';
+$statement = $db->prepare($query);
+$statement->bindValue(':todo_id', $todo_id);
+$statement->execute();
+$statement->closeCursor();
+}
+
+function updateToDoStatus($todo_id, $status){
+global $db;
+$query = 'UPDATE todos SET status = :status WHERE id = :todo_id';
+$statement = $db->prepare($query);
+$statement->bindValue(':status', $status);
+$statement->bindValue(':todo_id', $todo_id);
+$statement->execute();
+$statement->closeCursor();
+  }
+  ?>
 
