@@ -3,7 +3,7 @@
     $user_email=filter_input(INPUT_POST, 'user_emailid');
       $password=filter_input(INPUT_POST, 'password');
 
-        $fetchuser = getUserForGivenEmail($user_emailid);
+        $fetchuser = fetchUserEmail($user_emailid);
 
 	  if($fetchuser == null || count($fetchuser) == 0){
 	      $login_error = "Email ID does not exist. Please try with a valid Email ID";
