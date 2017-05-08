@@ -2,8 +2,8 @@
 <br>
 <br>
 
-<form action = "login_contr.php" method="post">
-    <strong>Email</strong><br>
+<form action = "login_contr.php" method="POST">
+<strong>Email</strong><br>
         <input type = "email" name = "user_emailid"><br><br>
 	    <strong>Password</strong><br>
 	        <input type = "password" name = "password"><br><br>

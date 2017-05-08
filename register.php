@@ -1,76 +1,28 @@
-d>
-<title>Registeration Page</title>
-<style type="text/css">
-div.container {
-border: 3px solid #01f1f1;
-padding: 6px;
-width:350px;
-margin:20px auto;
-text-align:center;  
-}
-.login { 
-background:#f9f9f9; 
-}
-.login div {
-border:2px solid #fff;
-padding:3px;
-}
-.register { 
-background:#f9f9f9; 
-}
-.register div {
-border:2px solid #fff;
-padding:3px;
-}
-input[type=text], input[type=password] {
-padding: 6px 15px;
-margin: 8px 0;
-border: 1px solid #ccc;
-}
-button {
-background-color: #4CAF50;
-color: white;
-padding: 6px 15px;
-margin: 8px 0;
-width: 50%;
-}
-</style>
-</head>
-
-<body>
-<div class='container' align="center">
-<form method = "post" action="index.php" class="login">
-<div>
-<label><b>First Name</b></label>
-<input type="text" name="reg_fname" placeholder="Enter First Name" required>
-</div>
-<div>
-<label><b>Last Name</b></label>
-<input type="text" name="reg_lname" placeholder="Enter Last Name" required>
-</div>
-<div>
-<label><b>Email ID (User ID)</b></label>
-<input type="text" name="reg_emailid" placeholder="Enter Email ID" required>
-</div>
-<div>
-<label><b>Phone Number</b></label>
-<input type="text" name="reg_phonenumber" placeholder="Enter Email ID"
-required>
-</div>
-<div>
-<label><b>Birth Day</b></label>
-<input type="text" name="reg_bday" placeholder="Enter BirthDay" required>
-</div>
-<div>
-<label><b>Gender</b></label>
-<input type="text" name="reg_gender" placeholder="Enter Gender" required>
-</div>
-<div>
-<button type="submit">Sign Up !</button>     
-</div>
+<?php include 'todoheader.php'; ?>
+<form action = "register_controller.php" method="post">
+<strong>First name</strong><br>
+<input type = "text" name = "first_name" placeholder="Enter a First Name"><br><br>
+<strong>Last name</strong><br>
+<input type = "text" name = "last_name" placeholder="Enter Last Name"><br><br>
+<strong>Email</strong><br>
+<input type = "email" name = "user_emailid" placeholder="Enter a valid Email ID"><br><br>
+<strong>Password</strong><br>
+<input type = "password" name = "password" placeholder="Enter password"><br><br>
+<strong>Phone Number(xxx-xxx-xxxx)</strong><br>
+<input type="tel" pattern="^\d{3}-\d{3}-\d{4}$" placeholder="Enter pho no." name = "phone_no"><br><br>
+<strong>Birthday</strong><br>
+<input type="Date" name = "birthday"><br><br>
+<strong>Gender</strong><br>
+<input type="radio" name="gender" value="M" checked> Male
+<input type="radio" name="gender" value="F"> Female
+<br><br>
+<input type = "submit" value="Submit">
 </form>
-</div>
-</body>
-
-</html>
+<br><br>
+<?php
+if(isset($login_error)){
+echo $login_error;
+}
+?>
+<?php include 'footer.php'; ?>
 

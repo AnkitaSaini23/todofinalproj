@@ -1,5 +1,6 @@
 <?php
-require_once('db.php');
+require('db_connection.php');
+require('db.php');
 $completed_todo_list = fetchtodolist($user['id'],"Completed");
 $incomplete_todo_list = fetchtodolist($user['id'],"Pending");
 ?>
