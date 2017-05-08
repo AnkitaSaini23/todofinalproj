@@ -8,21 +8,22 @@ $statement->bindValue(':todo_text',$todo_text);
 $statement->execute();
 $statement->closeCursor();
 }
-function getTodoItems($user_id){
+function getTodoItemsForGivenUser($user_id, $status){
 global $db;
-$query = 'select * from todos where user_id= :userid';
-$statement = $db->prepare($query);
-$statement->bindValue(':userid',$user_id);
+$queryname = 'SELECT * FROM todos WHERE user_id = :user_id AND status = :status order by createdtime';
+$statement = $db->prepare($queryname);
+$statement->bindvalue(':user_id',$user_id);
+$statement->bindvalue(':status',$status);
 $statement->execute();
-$result= $statement->fetchAll();
+$todo_list = $statement->fetchAll();
 $statement->closeCursor();
-return $result;
+return $todo_list;
 }
-function createUser($username, $password){
+function createUser($username,$first_name,$last_name,$password,$phone_no,$birthday,$gender){
 global $db;
-$query = 'select * from users where username = :name ';
+$query = 'select * from users where username = :username ';
 $statement = $db->prepare($query);
-$statement->bindValue(':name',$username);
+$statement->bindValue(':username',$username);
 $statement->execute();
 $result= $statement->fetchAll();
 $statement->closeCursor();
@@ -32,39 +33,47 @@ if($count > 0)
 return true;
 }
 else{
-$query = 'insert into users (username,passwordHash) values (:name, :pass)';
-$statement = $db->prepare($query);
-$statement->bindValue(':name',$username);
-$statement->bindValue(':pass',$password);
-$statement->execute();
-$statement->closeCursor();
-return false;
-}
-}
-function isUserValid($username,$password){
-global $db;
-$query = 'select * from users where username = :name and 
-passwordHash = :pass';
-$statement = $db->prepare($query);
-$statement->bindValue(':name',$username);
-$statement->bindValue(':pass',$password);
-$statement->execute();
-$result= $statement->fetchAll();
-$statement->closeCursor();
-$count = $statement->rowCount();
-if($count == 1){
-setcookie('login',$username);
-setcookie('my_id',$result[0]['id']);
-setcookie('islogged',true);
-return true;
-}
-else{
-unset($_COOKIE['login']);
-setcookie('login',false);
-setcookie('islogged',false);
-setcookie('id',false);
-return false;
-}
-}
-?>
+$query = 'INSERT INTO users
+( username ,password, first_name, last_name, phone_no,birthday,gender)
+VALUES
+(:username,:password, :first_name, :last_name, :phone_no, :birthday, :gender)';
+ $statement = $db->prepare($query);
+ $statement->bindValue(':username', $username);
+ $statement->bindValue(':password', $password);
+ $statement->bindValue(':first_name', $first_name);
+ $statement->bindValue(':last_name', $last_name);
+ $statement->bindValue(':phone_no', $phone_no);
+ $statement->bindValue(':birthday', $birthday);
+ $statement->bindValue(':gender', $gender);
+ $statement->execute();
+ $statement->closeCursor();
+ return false;
+ }
+ }
+ function isUserValid($username,$password){
+ global $db;
+ $query = 'select * from users where username = :name and 
+ passwordHash = :pass';
+ $statement = $db->prepare($query);
+ $statement->bindValue(':name',$username);
+ $statement->bindValue(':pass',$password);
+ $statement->execute();
+ $result= $statement->fetchAll();
+ $statement->closeCursor();
+ $count = $statement->rowCount();
+ if($count == 1){
+ setcookie('login',$username);
+ setcookie('my_id',$result[0]['id']);
+ setcookie('islogged',true);
+ return true;
+ }
+ else{
+ unset($_COOKIE['login']);
+ setcookie('login',false);
+ setcookie('islogged',false);
+ setcookie('id',false);
+ return false;
+ }
+ }
+ ?>
 
