@@ -1,5 +1,4 @@
 <?php
-require_once('database_connection.php');
 
 function addTodoItem($user_id,$todo_text){
 global $db;
@@ -55,10 +54,10 @@ VALUES
  function isUserValid($username,$password){
  global $db;
  $query = 'select * from users where username = :username and 
- password = :pass';
+ password = :password';
  $statement = $db->prepare($query);
  $statement->bindValue(':username',$username);
- $statement->bindValue(':pass',$password);
+ $statement->bindValue(':password',$password);
  $statement->execute();
  $result= $statement->fetchAll();
  $statement->closeCursor();
@@ -66,6 +65,7 @@ VALUES
  if($count == 1){
  setcookie('login',$username);
  setcookie('my_id',$result[0]['id']);
+ setcookie('name',$result[0]['first_name'].' '.$result[0]['last_name']);
  setcookie('islogged',true);
  return true;
  }
