@@ -1,4 +1,6 @@
 <?php
+require_once('database_connection.php');
+
 function addTodoItem($user_id,$todo_text){
 global $db;
 $query = 'insert into todos(user_id,todo_item) values (:userid,:todo_text)';
@@ -52,10 +54,10 @@ VALUES
  }
  function isUserValid($username,$password){
  global $db;
- $query = 'select * from users where username = :name and 
- passwordHash = :pass';
+ $query = 'select * from users where username = :username and 
+ password = :pass';
  $statement = $db->prepare($query);
- $statement->bindValue(':name',$username);
+ $statement->bindValue(':username',$username);
  $statement->bindValue(':pass',$password);
  $statement->execute();
  $result= $statement->fetchAll();
