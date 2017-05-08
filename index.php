@@ -16,5 +16,5 @@
     if(isset($login_error)){echo $login_error;
 		      }
 		      ?>
-<?php include 'todofooter.php'; ?>
+<?php include 'footer.php'; ?>
 
