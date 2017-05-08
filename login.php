@@ -51,13 +51,13 @@ width: 50%;
 required>
 <input type ="hidden" name="action" value="test_user">
 </div>
+
 <div>
 <button type="submit">Login</button>     
 </div>
 </form>
-<form action="register.php" class="register">
- <div>
-  <button type="submit">Sign up</button>
+
+<p>Not registered yet? <a href='register.php'>Register Here</a></p>
    </div>
    </form>
    </div>
