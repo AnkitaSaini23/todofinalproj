@@ -1,44 +1,20 @@
-<?php
-require('db_connection.php');
-require('db.php');
-$action = filter_input(INPUT_POST, "action");
-if($action == NULL)
-{
-$action = "show_login_page";
-}
-if($action == "show_login_page")
-{
-include('login.php');
-}else if($action == 'test_user')
-{
-$username = $_POST['reg_uname'];
-$password = $_POST['reg_password'];
-$suc = isUserValid($username,$password);
-if($suc == true)
-{
-$result = getTodoItemsForGivenUser($_COOKIE['my_id']);
-include('list.php');
-}else{
-header("Location: badInfo.php");
-}
-}else if ($action == 'registrar')
-{
- // echo " we want to create a new account";
- $name = filter_input(INPUT_POST, 'reg_uname');
- if(isset($name))
- {
- $pass = filter_input(INPUT_POST, 'reg_password');
- $exit = createUser($name,$pass);
- if($exit == true)
- {
- include('user_exit.php');
- }else {
- header("Location: login.php");
- }
- }
- }else if ($action == 'add')
- {
+<?php include 'todoheader.php'; ?>
+<br>
+<br>
 
- }
- ?>
+<form action = "login_contr.php" method="post">
+    <strong>Email</strong><br>
+        <input type = "email" name = "user_email"><br><br>
+	    <strong>Password</strong><br>
+	        <input type = "password" name = "password"><br><br>
+		    <input style="align:center" type = "submit" value="Login">
+		    </form>
+		    <br><br>
+		    <p>New User ? <a href="register.php">New User? Register here</a></p>
+		    <br><br>
+   <?php
+    if(isset($login_error)){echo $login_error;
+		      }
+		      ?>
+<?php include 'todofooter.php'; ?>
 
