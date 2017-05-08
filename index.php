@@ -16,7 +16,7 @@ $password = $_POST['reg_password'];
 $suc = isUserValid($username,$password);
 if($suc == true)
 {
-$result = getTodoItems($_COOKIE['my_id']);
+$result = getTodoItemsForGivenUser($_COOKIE['my_id']);
 include('list.php');
 }else{
 header("Location: badInfo.php");
