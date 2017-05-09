@@ -1,10 +1,12 @@
 <?php
 
-function fetchUserEmail($user_emailid){
+require_once('db_connection.php');
+
+function fetchUserEmail($username){
 global $db;
-$queryname = 'SELECT * FROM users WHERE username = :user_emailid';
+$queryname = 'select * from  users WHERE username = :username';
 $statement = $db->prepare($queryname);
-$statement->bindvalue(':user_emailid',$user_emailid);
+$statement->bindvalue(':username',$username);
 $statement->execute();
 $result = $statement->fetch();
 $statement->closeCursor();
@@ -22,7 +24,8 @@ $statement->closeCursor();
 return $result;
 }
 
-function createNewUser($username,$first_name,$last_name,$password,$phone_no,$birthday,$gender){
+function
+createNewUser($username,$first_name,$last_name,$password,$phone_no,$birthday,$gender){
 global $db;
 $query = 'INSERT INTO users
 (username ,password, first_name, last_name, phone_no,birthday,gender)
@@ -42,8 +45,7 @@ $statement->closeCursor();
 
 function fetchtodolist($user_id, $item_status){
 global $db;
-$queryname = 'SELECT * FROM todos WHERE user_id = :user_id AND item_status = :item_status order by
-due_date';
+$queryname = 'SELECT * FROM todos WHERE user_id = :user_id AND item_status = :item_status';
 $statement = $db->prepare($queryname);
 $statement->bindvalue(':user_id',$user_id);
 $statement->bindvalue(':item_status',$item_status);
@@ -83,12 +85,13 @@ $statement->closeCursor();
 
 function updateToDoStatus($todo_id, $status){
 global $db;
-$query = 'UPDATE todos SET status = :status WHERE id = :todo_id';
+$query = 'UPDATE todos SET item_status = :status WHERE id = :todo_id';
 $statement = $db->prepare($query);
 $statement->bindValue(':status', $status);
 $statement->bindValue(':todo_id', $todo_id);
 $statement->execute();
 $statement->closeCursor();
   }
-  ?>
+    ?>
+
 

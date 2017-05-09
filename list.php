@@ -1,11 +1,11 @@
 <?php
-require('db_connection.php');
+
 require('db.php');
-$completed_todo_list = fetchtodolist($user['id'],"Completed");
-$incomplete_todo_list = fetchtodolist($user['id'],"Pending");
+$completed_list = fetchtodolist($result['user_id'],"Completed");
+$incomplete_list = fetchtodolist($result['id'],"Pending");
 ?>
 <?php include 'todoheader.php'; ?>
-<?php echo $user['first_name']." ".$user['last_name'];?>
+<?php echo $result['first_name']." ".$result['last_name'];?>
 <br>
 <br>
 <a style = "padding:12px" href="index.php">logout</a>
@@ -14,13 +14,13 @@ $incomplete_todo_list = fetchtodolist($user['id'],"Pending");
 <h4>To-do items</h3>
 
 <table>
-<?php foreach($incomplete_todo_list as $todo) : ?>
+<?php foreach($incomplete_list as $todo) : ?>
 <tr>
 <td>
 <form action="list_controller.php" method="post">
 <input type="text" name ="todo_item" value = "<?php echo $todo['todo_item'];?>">
 <input type="hidden" name="todo_id" value="<?php echo $todo['id']; ?>">
-<input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
+<input type="hidden" name="user_id" value="<?php echo $result['id']; ?>">
 <input name="actionBtn" type="submit" value="edit">
 <input name="actionBtn" type="submit" value="delete">
 <input name="actionBtn" type="submit" value="completed">
@@ -34,13 +34,13 @@ $incomplete_todo_list = fetchtodolist($user['id'],"Pending");
 <br><br>
 <h4>Completed To-do items</h3>
 <table>
-<?php foreach($completed_todo_list as $todo) : ?>
+<?php foreach($completed_list as $todo) : ?>
 <tr>
 <td>
 <form action="list_controller.php" method="post">
 <input type="text" name ="todo_item" value = "<?php echo $todo['todo_item'];?>">
 <input type="hidden" name="todo_id" value="<?php echo $todo['id']; ?>">
-<input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
+<input type="hidden" name="user_id" value="<?php echo $result['id']; ?>">
 <input name="actionBtn" type="submit" value="edit">
 <input name="actionBtn" type="submit" value="delete">
 </form>
@@ -53,7 +53,7 @@ $incomplete_todo_list = fetchtodolist($user['id'],"Pending");
 <form action="list_controller.php" method="post">
 <label>Todo Item</label>
 <input type="text" name="todo_item">
-<input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
+<input type="hidden" name="user_id" value="<?php echo $result['id']; ?>">
 <input name="actionBtn" type="submit" value="add">
 </form>
 <?php include 'footer.php'; ?>
