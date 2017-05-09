@@ -1,6 +1,7 @@
 <?php
 
-require('db.php');
+
+
 $completed_list = fetchtodolist($result['user_id'],"Completed");
 $incomplete_list = fetchtodolist($result['id'],"Pending");
 ?>
@@ -18,7 +19,8 @@ $incomplete_list = fetchtodolist($result['id'],"Pending");
 <tr>
 <td>
 <form action="list_controller.php" method="post">
-<input type="text" name ="todo_item" value = "<?php echo $todo['todo_item'];?>">
+<input type="text" name ="todo_item" value = "<?php echo
+$todo['todo_item'];?>">
 <input type="hidden" name="todo_id" value="<?php echo $todo['id']; ?>">
 <input type="hidden" name="user_id" value="<?php echo $result['id']; ?>">
 <input name="actionBtn" type="submit" value="edit">
@@ -38,7 +40,8 @@ $incomplete_list = fetchtodolist($result['id'],"Pending");
 <tr>
 <td>
 <form action="list_controller.php" method="post">
-<input type="text" name ="todo_item" value = "<?php echo $todo['todo_item'];?>">
+<input type="text" name ="todo_item" value = "<?php echo
+$todo['todo_item'];?>">
 <input type="hidden" name="todo_id" value="<?php echo $todo['id']; ?>">
 <input type="hidden" name="user_id" value="<?php echo $result['id']; ?>">
 <input name="actionBtn" type="submit" value="edit">
@@ -57,4 +60,5 @@ $incomplete_list = fetchtodolist($result['id'],"Pending");
 <input name="actionBtn" type="submit" value="add">
 </form>
 <?php include 'footer.php'; ?>
+
 
